@@ -6,13 +6,13 @@ Desenvolvido com [React-Native](https://reactnative.dev/) e Node.js version 14.1
 
 ## Como rodar a aplicação:
 
-É necessário o Node.js
+É necessário o Node.js e [Expo Go](https://expo.dev/client)
 
 ### Comandos: 
 
 npm install -> Após baixar a aplicação  </br>
 npm start ou expo start -> para inicial a aplicação  </br>
-e abrir no navegador http://localhost:3000/ </br>
+ler o QrCode utilizando o Expo Go 
 
 
 ## DESENVOLVIDO POR: CAIQUE AZEVEDO COELHO LEME
