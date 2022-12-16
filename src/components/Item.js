@@ -16,11 +16,7 @@ export default function Item({ item }) {
     function marcarConcluido() {
         concluir(item.id)
             .then(() => {
-                setConcluido(item.concluido)                
-                Alert.alert('Atualizado', "Estado atualizado!", '', [{
-                    text: "Ok",
-                    onPress: () => {}
-                }])
+                setConcluido(!item.concluido)                
             }).catch(() => {
                 Alert.alert('Erro', "Não foi possível alterar o estado do item")
             })
@@ -29,11 +25,7 @@ export default function Item({ item }) {
     function desmarcarConcluido() {
         desconcluir(item.id)
             .then(() => {
-                setConcluido(item.concluido)
-                Alert.alert('Atualizado', "Estado atualizado!", '', [{
-                    text: "Ok",
-                    onPress: () => {}
-                }])
+                setConcluido(!item.concluido)
             }).catch(() => {
                 Alert.alert('Erro', 'Não foi possível alterar o estado do item')
             })
