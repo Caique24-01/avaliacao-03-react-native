@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getAllItens } from "../context/ItemContext"
 import Item from "./Item"
 import Mensagem from "./Mensagem"
+import AddIcon from "../assets/plus-circle.png"
 
 export default function Itens() {
 
@@ -20,14 +21,14 @@ export default function Itens() {
             .then(response => {
                 setItens(response.data)
             })
-            .catch(erro => {
-                console.log(erro)
+            .catch(() => {
                 setErro(true)
             })
     }, [itens])
 
     return (
         <View style={styles.container}>
+            <Text style={styles.nomeLista}>Lista {route.params.titulo}</Text>
             {
                 erro ?
                     <Mensagem erro={erro} mensagem={"Falha ao listar os itens"} bgColor={'#dc3545'} /> :
@@ -35,13 +36,17 @@ export default function Itens() {
                     <View>
                         {
                             itens.length > 0 ?
-
-                                <FlatList
-                                    data={itens}
-                                    keyExtractor={(item) => item.id}
-                                    renderItem={(item) => <Item {...item} />}
-                                    style={styles.lista}
-                                />
+                                <>
+                                    <FlatList
+                                        data={itens}
+                                        keyExtractor={(item) => item.id}
+                                        renderItem={(item) => <Item {...item} />}
+                                        style={styles.lista}
+                                    />
+                                    <TouchableOpacity style={[styles.botaoAdicionar, { backgroundColor: '#FFA500' }]} onPress={() => navigate('Novo Item', route.params)}>
+                                        <Image style={styles.botaoTextoAdicionar} source={AddIcon} />
+                                    </TouchableOpacity>
+                                </>
                                 :
 
                                 <View style={styles.listaVazia}>
@@ -56,6 +61,7 @@ export default function Itens() {
                         }
                     </View>
             }
+
         </View>
 
     )
@@ -66,6 +72,16 @@ const styles = StyleSheet.create({
         alignContent: "center",
         height: '100%',
         justifyContent: "center",
+    },
+    nomeLista: {
+        position: 'relative',
+        justifyContent: "center",
+        textAlign: "center",
+        color: '#696969',
+        opacity: 0.3, 
+        fontWeight: "bold",
+        fontSize: 25,
+        marginTop: 25
     },
     lista: {
         width: '100%',
@@ -81,7 +97,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFA500'
     },
     texto: {
-        color: '#FFFFFF',
+        color: '#FFF',
         fontSize: 25,
         textAlign: "center",
         fontWeight: "bold",
@@ -102,4 +118,20 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: '#FFA500',
     },
+    botaoAdicionar: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 4,
+        position: 'absolute',
+        right: 25,
+        bottom: 45
+
+    },
+    botaoTextoAdicionar: {
+        height: 25,
+        width: 25
+    }
 });

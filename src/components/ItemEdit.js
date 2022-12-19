@@ -21,7 +21,7 @@ export default function ItemEdit() {
         }
         updateItem(route.params.id, route.params.lista.id, data)
             .then(() => {
-                setMensagem("Item alterada!")
+                setMensagem("Item alterado!")
                 setSubmitted(true)
 
             })
@@ -32,18 +32,18 @@ export default function ItemEdit() {
     }
 
     function excluirItem() {
-        Alert.alert("Tem certeza que deseja excluir está lista? ", '', [{
+        Alert.alert("Tem certeza que deseja excluir este item? ", '', [{
             text: "Cancelar",
             onPress: () => { }
         },
         {
             text: "Excluir", onPress: () => deleteItem(route.params.id).
                 then(() => {
-                    setMensagem("Lista excluída")
+                    setMensagem("Item excluído")
                     setSubmitted(true)
                 })
                 .catch(() => {
-                    setMensagem("Falha ao excluir lista")
+                    setMensagem("Falha ao excluir item")
                     setErro(true)
                 })
         }])

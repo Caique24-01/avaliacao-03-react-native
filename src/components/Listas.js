@@ -13,8 +13,7 @@ export default function Listas() {
         getAllListas().then(response => {
             setListas(response.data)
         })
-            .catch(erro => {
-                console.log(erro)
+            .catch(() => {
                 setErro(true)
             })
     }, [listas])

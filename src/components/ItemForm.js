@@ -19,13 +19,13 @@ export default function ItemForm() {
 
         createItem(route.params.id, data)
             .then(() => {
-                setMensagem("Lista adicionada!")
+                setMensagem("Item adicionado!")
                 setSubmitted(true)
                 setTitulo("")
 
             })
             .catch(() => {
-                setMensagem("Falha ao cadastrar lista")
+                setMensagem("Falha ao cadastrar item")
                 setErro(true)
                 setTitulo("")
             })
