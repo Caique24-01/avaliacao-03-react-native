@@ -3,12 +3,13 @@ import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-na
 import EditIcon from '../assets/edit.png'
 import CheckIcon from '../assets/check-circle.png'
 import UncheckIcon from '../assets/uncheck-circle.png'
-import { concluir, desconcluir } from "../context/ItemContext"
-import { useState } from "react"
+import { concluir, desconcluir, ItemContexto } from "../context/ItemContext"
+import { useContext, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
 
 export default function Item({ item }) {
 
+    const {setItemContexto} = useContext(ItemContexto)
     const [concluido, setConcluido] = useState(item.concluido)
 
     const { navigate } = useNavigation()
@@ -31,12 +32,17 @@ export default function Item({ item }) {
             })
     }
 
+    function editar(item) {
+        setItemContexto(item)
+        navigate('Editar Item')
+    }
+
     return (
         <View style={styles.cartao}>
             <View style={styles.textoContainer}>
                 <Text style={styles.texto} numberOfLines={1}>{item.titulo}</Text>
             </View>
-            <TouchableOpacity style={[styles.botaoAdicionar, { backgroundColor: '#FFA500' }]} onPress={() => navigate('Editar Item', item)}>
+            <TouchableOpacity style={[styles.botaoAdicionar, { backgroundColor: '#FFA500' }]} onPress={() => editar(item)}>
                 <Image style={styles.botaoTexto} source={EditIcon} />
             </TouchableOpacity>
             {

@@ -1,14 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ItemProvider } from './src/context/ItemContext';
+import { ListaProvider } from './src/context/ListaContext';
 import AppRotas from './src/routes/AppRotas';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <AppRotas/>
-    </SafeAreaView>
+    <ListaProvider>
+      <ItemProvider>
+        <SafeAreaView style={styles.container}>
+          <StatusBar style="auto" />
+          <AppRotas />
+        </SafeAreaView>
+      </ItemProvider>
+    </ListaProvider>
   );
 }
 

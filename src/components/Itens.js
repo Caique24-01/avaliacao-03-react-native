@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native"
+import { useContext, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native"
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getAllItens } from "../context/ItemContext"
 import Item from "./Item"
 import Mensagem from "./Mensagem"
 import AddIcon from "../assets/plus-circle.png"
+import { ListaContexto } from "../context/ListaContext";
 
 export default function Itens() {
 
-    const route = useRoute();
+    const { navigate } = useNavigation()
+
+    const {listaContexto} = useContext(ListaContexto)
 
     const [itens, setItens] = useState([])
     const [erro, setErro] = useState(false)
 
-    const { navigate } = useNavigation()
-
-
     useEffect(() => {
-        getAllItens(route.params.id)
+        getAllItens(listaContexto.id)
             .then(response => {
                 setItens(response.data)
             })
@@ -28,7 +28,7 @@ export default function Itens() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.nomeLista}>Lista {route.params.titulo}</Text>
+            <Text style={styles.nomeLista}>Lista {listaContexto.titulo}</Text>
             {
                 erro ?
                     <Mensagem erro={erro} mensagem={"Falha ao listar os itens"} bgColor={'#dc3545'} /> :
@@ -43,7 +43,7 @@ export default function Itens() {
                                         renderItem={(item) => <Item {...item} />}
                                         style={styles.lista}
                                     />
-                                    <TouchableOpacity style={[styles.botaoAdicionar, { backgroundColor: '#FFA500' }]} onPress={() => navigate('Novo Item', route.params)}>
+                                    <TouchableOpacity style={[styles.botaoAdicionar, { backgroundColor: '#FFA500' }]} onPress={() => navigate('Novo Item')}>
                                         <Image style={styles.botaoTextoAdicionar} source={AddIcon} />
                                     </TouchableOpacity>
                                 </>
@@ -53,7 +53,7 @@ export default function Itens() {
                                     <Text style={styles.texto}>Nenhum item cadastrado</Text>
                                     <TouchableOpacity
                                         style={styles.botao}
-                                        onPress={() => navigate('Novo Item', route.params)}
+                                        onPress={() => navigate('Novo Item')}
                                     >
                                         <Text style={styles.botaoTexto}>Novo item</Text>
                                     </TouchableOpacity>

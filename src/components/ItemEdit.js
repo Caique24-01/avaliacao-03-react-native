@@ -1,14 +1,15 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useContext, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { deleteItem, updateItem } from "../context/ItemContext";
+import { deleteItem, ItemContexto, updateItem } from "../context/ItemContext";
 import Mensagem from "./Mensagem";
 
 export default function ItemEdit() {
 
-    const route = useRoute()
 
-    const [titulo, setTitulo] = useState(route.params.titulo)
+    const {itemContexto} = useContext(ItemContexto)
+
+    const [titulo, setTitulo] = useState(itemContexto.titulo)
     const [erro, setErro] = useState(false);
     const [mensagem, setMensagem] = useState("")
     const [submitted, setSubmitted] = useState(false);
@@ -19,7 +20,7 @@ export default function ItemEdit() {
         const data = {
             titulo: titulo
         }
-        updateItem(route.params.id, route.params.lista.id, data)
+        updateItem(itemContexto.id, itemContexto.lista.id, data)
             .then(() => {
                 setMensagem("Item alterado!")
                 setSubmitted(true)
@@ -37,7 +38,7 @@ export default function ItemEdit() {
             onPress: () => { }
         },
         {
-            text: "Excluir", onPress: () => deleteItem(route.params.id).
+            text: "Excluir", onPress: () => deleteItem(itemContexto.id).
                 then(() => {
                     setMensagem("Item excluído")
                     setSubmitted(true)
@@ -57,7 +58,7 @@ export default function ItemEdit() {
                         <Mensagem mensagem={mensagem} bgColor={'#90EE90'} />
                         <TouchableOpacity
                             style={[styles.botao, { backgroundColor: '#FFFFFF', }]}
-                            onPress={() => navigate('Listas')}
+                            onPress={() => navigate('Itens')}
                         >
                             <Text style={{ color: '#90EE90' }}>Voltar</Text>
                         </TouchableOpacity>

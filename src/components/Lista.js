@@ -1,19 +1,32 @@
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EditIcon from '../assets/edit.png'
 import ItensIcon from '../assets/list-numbers.png'
+import { ListaContexto } from "../context/ListaContext";
 
 export default function Lista({ item }) {
     const { navigate } = useNavigation();
+    const {setListaContexto} = useContext(ListaContexto)
+
+    function getItens(item) {
+        setListaContexto(item)
+        navigate('Itens')
+    }
+    
+    function editar(item) {
+        setListaContexto(item)
+        navigate('Editar Lista')
+    }
     return (
         <View style={styles.cartao}>
             <View style={styles.textoContainer}>
                 <Text style={styles.texto} numberOfLines={1}>{item.titulo}</Text>
             </View>
-            <TouchableOpacity style={[styles.botaoAdicionar, {backgroundColor: '#FFA500'}]} onPress={() => navigate('Editar Lista', item)}>
+            <TouchableOpacity style={[styles.botaoAdicionar, {backgroundColor: '#FFA500'}]} onPress={() => editar(item)}>
                 <Image style={styles.botaoTexto} source={EditIcon} />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.botaoAdicionar, {backgroundColor: '#32CD32'}]} onPress={() => navigate('Itens', item)}>
+            <TouchableOpacity style={[styles.botaoAdicionar, {backgroundColor: '#32CD32'}]} onPress={() => getItens(item)}>
                 <Image style={styles.botaoTexto} source={ItensIcon} />
             </TouchableOpacity>
         </View>

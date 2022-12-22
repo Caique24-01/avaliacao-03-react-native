@@ -1,23 +1,24 @@
-import { useRoute } from "@react-navigation/native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { createItem } from "../context/ItemContext";
+import { ListaContexto } from "../context/ListaContext";
 import Mensagem from "./Mensagem";
 
 export default function ItemForm() {
+
+    const {listaContexto} = useContext(ListaContexto)
+
     const [titulo, setTitulo] = useState("")
     const [erro, setErro] = useState(false);
     const [mensagem, setMensagem] = useState("")
     const [submitted, setSubmitted] = useState(false);
-
-    const route = useRoute()
 
     function newLista() {
         const data = {
             titulo: titulo
         }
 
-        createItem(route.params.id, data)
+        createItem(listaContexto.id, data)
             .then(() => {
                 setMensagem("Item adicionado!")
                 setSubmitted(true)

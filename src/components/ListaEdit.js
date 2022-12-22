@@ -1,31 +1,32 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useContext, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { deleteLista, updateLista } from "../context/ListaContext";
+import { deleteLista, ListaContexto, updateLista } from "../context/ListaContext";
 import Mensagem from "./Mensagem";
 
 export default function ListaEdit() {
 
-    const route = useRoute()
+    const {listaContexto} = useContext(ListaContexto)
+    const { navigate } = useNavigation()
 
-    const [titulo, setTitulo] = useState(route.params.titulo)
+    const [titulo, setTitulo] = useState(listaContexto.titulo)
     const [erro, setErro] = useState(false);
     const [mensagem, setMensagem] = useState("")
     const [submitted, setSubmitted] = useState(false);
 
-    const { navigate } = useNavigation()
+   
 
     function alteraLista() {
         const data = {
             titulo: titulo
         }
-        updateLista(route.params.id, data)
+        updateLista(listaContexto.id, data)
             .then(() => {
                 setMensagem("Lista alterada!")
                 setSubmitted(true)
 
             })
-            .catch((erro) => {
+            .catch(() => {
                 setMensagem("Falha ao alterar lista")
                 setErro(true)
             })
@@ -37,7 +38,7 @@ export default function ListaEdit() {
             onPress: () => { }
         },
         {
-            text: "Excluir", onPress: () => deleteLista(route.params.id).
+            text: "Excluir", onPress: () => deleteLista(listaContexto.id).
                 then(() => {
                     setMensagem("Lista excluída")
                     setSubmitted(true)
